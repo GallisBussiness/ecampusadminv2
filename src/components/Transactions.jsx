@@ -16,6 +16,7 @@ import { createDepot, createRetrait, getOperationsByCompte } from '../services/o
 import { GiReceiveMoney,GiPayMoney } from 'react-icons/gi'
 import { format, parseISO } from 'date-fns';
 import { FcMoneyTransfer } from 'react-icons/fc';
+import { useAuthUser } from 'react-auth-kit';
 
 
 const Operations = () => {
@@ -25,7 +26,8 @@ const [r,setR] = useState(false)
 const toast = useRef(null);
 const dt = useRef(null);
 const { id } = useParams();
-const defaultValues = {montant: 100, compte: id,responsable: ''}
+const auth = useAuthUser()()
+const defaultValues = {montant: 100, compte: id,responsable: auth?.id}
 const { control, handleSubmit, formState: {errors} } = useForm({defaultValues});
 const { control:controlR, handleSubmit:handleSubmitR, formState: {errors: errorsR} } = useForm({defaultValues});
 const qc = useQueryClient();

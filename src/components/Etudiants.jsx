@@ -2,21 +2,17 @@ import { FilterMatchMode, FilterOperator } from 'primereact/api'
 import { Column } from 'primereact/column'
 import { DataTable } from 'primereact/datatable'
 import { Toast } from 'primereact/toast'
-import { Toolbar } from 'primereact/toolbar'
 import { useRef, useState } from 'react'
-import {  useQuery, useQueryClient } from 'react-query'
+import {  useQuery } from 'react-query'
 import ModalContainer from 'react-modal-promise'
 import { InputText } from 'primereact/inputtext'
 import { getEtudiants } from '../services/etudiantService'
-import { FaEye,FaUserGraduate } from "react-icons/fa"
+import { FaEye } from "react-icons/fa"
 import { Avatar } from '@mantine/core'
 import { useNavigate } from 'react-router-dom'
-import { format, parseISO } from 'date-fns'
+// import { format, parseISO } from 'date-fns'
 
 function Etudiants() {
-
-    const [selectedEtudiants, setSelectedEtudiants] = useState(null);
-    const qc = useQueryClient()
     const toast = useRef();
     const navigate = useNavigate();
     const [filters, setFilters] = useState({
@@ -45,11 +41,6 @@ function Etudiants() {
         navigate(`/dashboard/etudiants/${d._id}`);
     }
 
-    const handleDelete = () => {
-        for(let i = 0; i < selectedEtudiants?.length; i++) {
-           deleteD(selectedEtudiants[i]?._id);
-        }
-    }
 
     const renderHeader = () => {
         return (
@@ -76,15 +67,14 @@ function Etudiants() {
 
   return (
     <>
-        <div className="datatable-doc mt-4 w-full mx-auto">
+        <div className="datatable-doc mt-4 w-11/12 mx-auto">
                     <div className="card">
                         <DataTable value={Etudiants} paginator className="p-datatable-customers" header={header} rows={10}
                             paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown" rowsPerPageOptions={[10,25,50]}
-                            dataKey="_id" rowHover selection={selectedEtudiants} onSelectionChange={e => setSelectedEtudiants(e.value)}
+                            dataKey="_id" rowHover
                             filters={filters} filterDisplay="menu" loading={isLoading} responsiveLayout="scroll"
                             globalFilterFields={['nom', 'prenom','nce','telephone']} emptyMessage="Aucun Etudiant trouvé"
                             currentPageReportTemplate="Voir {first} de {last} à {totalRecords} etudiants" size="small">
-                            <Column selectionMode="multiple" headerStyle={{ width: '3em' }}></Column>
                             <Column field="prenom" header="Prenom" sortable style={{ minWidth: '8rem' }} />
                             <Column field="nom" header="Nom" sortable style={{ minWidth: '8rem' }} />
                             <Column field="nce" header="N° Carte Etudiant" sortable style={{ minWidth: '8rem' }} />

@@ -17,6 +17,8 @@ import Etudiant from "./Etudiant";
 import Operations from "./Transactions";
 import P404 from "./P404";
 import Comptes from "./Comptes";
+import Services from "./Services";
+import PaymentSubject from "./Service";
 
 const Dashboard = () => {
   const auth = useAuthUser()();
@@ -78,6 +80,8 @@ const Dashboard = () => {
      <Route path="etudiants" element={<Etudiants />} />
      <Route path="etudiants/:id" element={<Etudiant />} />
      <Route path="transactions/:id" element={<Operations/>} />
+     <Route path="services" element={<Services/>} />
+     <Route path="services/:id" element={<PaymentSubject/>} />
      <Route path="comptes" element={<Comptes/>} />
      <Route path="*" element={<P404/>} />
      </Routes>
@@ -113,7 +117,7 @@ const Dashboard = () => {
                   <MdAccountBalanceWallet className="inline text-green-600" /> COMPTES
                 </Link>
                 <Link
-                  to="/dashboard/users"
+                  to="/dashboard/services"
                   className="bg-white hover:bg-orange-400 hover:text-white shadow-md text-center py-2"
                 >
                   <FcServices className="inline text-green-600" /> SERVICES
