@@ -8,6 +8,8 @@ import { locale, addLocale } from 'primereact/api';
 import { MantineProvider } from '@mantine/core';
 import { Notifications } from '@mantine/notifications';
 import Dashboard from './components/Dashboard';
+import { AbilityContext } from './casl/can';
+import ability from './casl/ability';
 
 addLocale('fr', {
   firstDayOfWeek: 1,
@@ -51,6 +53,7 @@ function App() {
                   cookieDomain={window.location.hostname}
     cookieSecure={window.location.protocol === "https:"}>
        <MantineProvider withGlobalStyles withNormalizeCSS>
+       <AbilityContext.Provider value={ability}>
         <Notifications />
          <BrowserRouter>
         <Routes>
@@ -60,6 +63,7 @@ function App() {
        <Route path="*" element={<P404/>} />
      </Routes>
       </BrowserRouter>
+      </AbilityContext.Provider>
        </MantineProvider>
    </AuthProvider> 
    </QueryClientProvider>

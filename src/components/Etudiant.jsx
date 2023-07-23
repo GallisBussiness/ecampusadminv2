@@ -2,17 +2,21 @@ import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useNavigate, useParams } from "react-router-dom";
 import { getEtudiant, updateEtudiantAvatar } from "../services/etudiantService";
 import { Toast } from "primereact/toast";
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import ModalContainer from 'react-modal-promise'
 import { createCompte, getCompteByEtudiant } from "../services/compteService";
-import ReactToPdf from "react-to-pdf";
+// import ReactToPdf from "react-to-pdf";
 import { FaAt, FaPhoneAlt, FaUser } from 'react-icons/fa';
-import { MdLocationPin } from 'react-icons/md';
-import { AiOutlineFieldNumber } from 'react-icons/ai';
+// import { MdLocationPin } from 'react-icons/md';
+// import { AiOutlineFieldNumber } from 'react-icons/ai';
 import createCompteModal from "../modals/CreateCompteModal";
 import { Avatar, Button, Group, LoadingOverlay, Text } from "@mantine/core";
 import "../App.css";
-import { QRCodeSVG } from "qrcode.react";
+// import { QRCodeSVG } from "qrcode.react";
+import Recto from './Recto'
+import { PDFViewer } from '@react-pdf/renderer'
+import Verso from './Verso'
+import QRGenerator from './QrCodeGenerator'
 
 const Etudiant = () => {
   const toast = useRef(null);
@@ -139,7 +143,7 @@ const Etudiant = () => {
      
     </div>
      {compte && <div className="bg-slate-50 p-20">
-
+{/* 
        <div
           className="relative w-96 h-56 mx-auto bg-blue-500 my-5 rounded-lg"
           ref={ref}
@@ -225,7 +229,17 @@ const Etudiant = () => {
               </div>
             )}
           </ReactToPdf>
-          </div>
+          </div> */}
+
+  <div className="hidden">
+      <QRGenerator value={compte?.code} documentId="qrcode" />
+    </div>
+    <PDFViewer width={400} height={400}>
+       <Recto compte={compte}/>
+    </PDFViewer>
+    <PDFViewer width={400} height={400}>
+       <Verso />
+    </PDFViewer>
      </div>}
 
       </section>
